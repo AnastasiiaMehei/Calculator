@@ -1,31 +1,42 @@
 <template>
-    <div class="formula-panel card bg-white bg-opacity-10 text-white p-3 mt-4">
-    <h2 class="h5 mb-3">Formulas</h2>
-    <div class="mb-3">
-      <label class="form-label">Choose formula</label>
-      <select v-model="selectedFormula" class="form-select bg-gray text-white">
-        <option v-for="option in formulaOptions" :key="option.value" :value="option.value">
-          {{ option.label }}
-        </option>
-      </select>
+  <div class="formula-panel">
+    <div class="formula-header">
+      <div>
+        <h2>Formulas</h2>
+        <p class="subtitle">Choose one and enter values for a quick calculation.</p>
+      </div>
+      <span class="formula-badge">Custom calculator</span>
     </div>
 
-    <div v-for="field in activeFields" :key="field.key" class="mb-3">
-      <label class="form-label">{{ field.label }}</label>
-      <input
-        type="number"
-        step="any"
-        class="form-control bg-gray text-white"
-        v-model="inputs[field.key]"
-        :placeholder="field.placeholder"
-      />
+    <div class="formula-tabs">
+      <button
+        v-for="option in formulaOptions"
+        :key="option.value"
+        :class="['formula-tab', { active: selectedFormula === option.value }]"
+        @click="selectedFormula = option.value"
+      >
+        {{ option.label }}
+      </button>
     </div>
 
-    <button class="btn btn-primary w-100" @click="calculateFormula">Calculate</button>
+    <div class="formula-inputs">
+      <div v-for="field in activeFields" :key="field.key" class="input-row">
+        <label>{{ field.label }}</label>
+        <input
+          type="number"
+          step="any"
+          class="custom-input"
+          v-model="inputs[field.key]"
+          :placeholder="field.placeholder"
+        />
+      </div>
+    </div>
 
-    <div class="result mt-3">
-      <strong>Result:</strong>
-      <span>{{ result }}</span>
+    <button class="calculate-btn" @click="calculateFormula">Calculate</button>
+
+    <div class="result-card">
+      <span class="label">Result</span>
+      <span class="value">{{ result || '—' }}</span>
     </div>
   </div>
 </template>
@@ -135,17 +146,162 @@ export default defineComponent({
 
 <style scoped>
 .formula-panel {
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), 0 16px 30px rgba(0, 0, 0, 0.25);
+}
+
+.formula-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.formula-header h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+.formula-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.formula-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(83, 160, 255, 0.5) rgba(255, 255, 255, 0.08);
+}
+
+.formula-tabs::-webkit-scrollbar {
+  height: 8px;
+}
+
+.formula-tabs::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.formula-tabs::-webkit-scrollbar-thumb {
+  background: rgba(83, 160, 255, 0.55);
+  border-radius: 999px;
+}
+
+.formula-tab {
+  background: rgba(255, 255, 255, 0.06);
+  color: #e8f1ff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 
-.formula-panel input,
-.formula-panel select {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.formula-tab.active {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
 }
 
-.result {
+.formula-tab:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.formula-inputs {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.input-row {
+  display: grid;
+  gap: 8px;
+}
+
+.input-row label {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.custom-input {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  padding: 12px 14px;
+  font-size: 1rem;
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.calculate-btn {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #53a0ff, #6f62ff);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.calculate-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(83, 160, 255, 0.3);
+}
+
+.result-card {
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-card .label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+}
+
+.result-card .value {
   font-size: 1rem;
   color: #fff;
+  font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .formula-tabs {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

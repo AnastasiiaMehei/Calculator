@@ -19,15 +19,26 @@ export default defineComponent({
   emits: ['button-click'],
   data() {
     return {
-      buttons: ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C', 'Delete']
+      buttons: [
+        'C', 'Delete', '(', ')', '/',
+        'sin', 'cos', 'tan', '^',
+        'asin', 'acos', 'atan', '*',
+        'sqrt', 'cbrt', 'ln', 'log',
+        '7', '8', '9', '-',
+        '4', '5', '6', '+',
+        '1', '2', '3', '=',
+        '0', '.', 'pi', 'e'
+      ]
     }
   },
   methods: {
     getButtonClass(btn: string): string {
-      if (['+', '-', '*', '/'].includes(btn)) return 'btn-warning text-dark fw-bold'
+      if (['+', '-', '*', '/', '^'].includes(btn)) return 'btn-warning text-dark fw-bold'
+      if (['sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'sqrt', 'cbrt', 'ln', 'log'].includes(btn)) return 'btn-info text-dark fw-bold'
       if (btn === '=') return 'btn-success fw-bold'
       if (btn === 'C') return 'btn-danger fw-bold'
       if (btn === 'Delete') return 'btn-warning text-dark fw-bold'
+      if (['pi', 'e', '(', ')'].includes(btn)) return 'btn-outline-secondary'
       return 'btn-outline-light'
     }
   }
@@ -38,6 +49,7 @@ export default defineComponent({
 .buttons-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .buttons-grid .btn {
@@ -56,8 +68,8 @@ export default defineComponent({
   transform: translateY(0);
 }
 
-.buttons-grid .btn-success {
-  grid-column: 3 / 5;
+ .buttons-grid .btn-success {
+  background-color: #28a745;
 }
 
 @media (max-width: 576px) {

@@ -1,7 +1,6 @@
 <template>
   <div class="calculator-wrapper">
     <div class="calculator-container">
-      <h1 class="text-white mb-4 text-center fw-bold">Calculator</h1>
       <Calculator />
     </div>
   </div>
@@ -38,7 +37,13 @@ export default defineComponent({
   border-radius: 20px;
   padding: 40px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  max-width: 400px;
+  max-width: 600px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.calculator-container:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(2deg) translateY(-8px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
 }
 
 @media (max-width: 576px) {

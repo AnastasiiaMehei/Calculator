@@ -43,7 +43,8 @@ export default defineComponent({
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   max-width: 600px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  margin-top: 475px;
+  margin-top: 520px;
+  margin-bottom: 20px;
 }
 
 .calculator-container:hover {

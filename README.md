@@ -3,9 +3,12 @@
 Simple Calculator Application built with **Vue 3**, **TypeScript**, **Vite**, and styled using **Bootstrap 5**.  
 The app features a modern glassmorphism UI with background image, hover animations, and advanced math functions.
 
-<img width="715" height="348" alt="image" src="https://github.com/user-attachments/assets/0809514e-0787-4dd2-ab14-112fb030749a" />
+<img width="718" height="330" alt="image" src="https://github.com/user-attachments/assets/e1f99a0c-3f13-4054-8790-3a8667a92a2a" />
 
-<img width="717" height="348" alt="image" src="https://github.com/user-attachments/assets/8497731f-1ad4-49df-ad95-130ae382a302" />
+<img width="717" height="229" alt="image" src="https://github.com/user-attachments/assets/a2756387-48c2-43d7-86f8-61157464493b" />
+
+
+
 
 
 ---
